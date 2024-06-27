@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Register block scripts and styles.
  *
@@ -12,7 +13,8 @@ namespace WebsiteBuilder;
  *
  * @since 1.0.0
  */
-class RegisterPluginSettings {
+class RegisterPluginSettings
+{
 
 	/**
 	 * Register class with appropriate WordPress hooks.
@@ -20,13 +22,14 @@ class RegisterPluginSettings {
 	 * @since 1.0.0
 	 * @return void
 	 */
-	public static function register() {
+	public static function register()
+	{
 		$instance = new self();
-		add_action( 'init', array( $instance, 'set_plugin_settings' ) );
+		add_action('init', array($instance, 'set_plugin_settings'));
 		// Pass settings variable to plugin store instead of grabbing
 		// settings via a resolver on page load.
-		add_action( 'enqueue_block_assets', array( $instance, 'init_plugin_store' ) );
-		add_action( 'admin_enqueue_scripts', array( $instance, 'init_plugin_store' ), 20, 1 );
+		add_action('enqueue_block_assets', array($instance, 'init_plugin_store'));
+		add_action('admin_enqueue_scripts', array($instance, 'init_plugin_store'), 20, 1);
 	}
 
 	/**
@@ -34,11 +37,12 @@ class RegisterPluginSettings {
 	 *
 	 * @return void
 	 */
-	public function set_plugin_settings() {
+	public function set_plugin_settings()
+	{
 
 		$settings = [
 			'settings' => [
-			'config' => "var tailwind = !! tailwind ? tailwind : window.tailwind;
+				'config' => "var tailwind = !! tailwind ? tailwind : window.tailwind;
 
 tailwind.config = {
 	important: true,
@@ -61,20 +65,7 @@ tailwind.config = {
 			boxShadow: {
 				inset: 'inset 0 1px 0 0 rgb(255 255 255 / 20%)',
 			},
-			colors: {
-				primary: {
-					DEFAULT: tailwind.colors.slate['900']
-				},
-				secondary: {
-					DEFAULT: tailwind.colors.white
-				},
-				text: {
-					DEFAULT: tailwind.colors.slate['600']
-				},
-				accent: {
-					DEFAULT: tailwind.colors.sky['500']
-				}
-			},
+z
 			fontFamily: {
 				primary: [
 					'Inter',
@@ -137,7 +128,7 @@ tailwind.config = {
 		];
 
 		// add_option only adds options if they don't yet exist.
-		add_option( 'draft_settings', $settings );
+		add_option('draft_settings', $settings);
 		// uncomment this to reset the settings object for testing.
 		// delete_option( 'draft_settings' );
 	}
@@ -147,10 +138,11 @@ tailwind.config = {
 	 *
 	 * @return void
 	 */
-	public function init_plugin_store() {
+	public function init_plugin_store()
+	{
 
 		// Read in existing settings values from database.
-		$settings = get_option( 'draft_settings' );
+		$settings = get_option('draft_settings');
 
 		// Create an object of all plugin settings that we need.
 		// We will then load these in the redux store and
